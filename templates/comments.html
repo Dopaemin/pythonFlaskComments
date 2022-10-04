@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1> HSS Flask Comments </h1>
+<link rel="stylesheet" href="static/css/style.css">
+<h1> Previous Comments </h1>
+<div class="center">
+    {% for comment in comments %}
+
+    <p>{{ comment }}</p>
+</div>
+    {% endfor %}
+
+{% endblock %}
