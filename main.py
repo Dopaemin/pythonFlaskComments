@@ -1,4 +1,4 @@
-from flask import Flask , render_template
+from flask import Flask , render_template, request, redirect
 
 app = Flask(__name__)
 
@@ -9,6 +9,23 @@ def index():
 
 @app.route('/comments')
 def comments():
-    return render_template('comments.html', comments=['Erster', 'Zweiter', 'Dritter'])
+    all_comments = ""
+
+    try:
+        f = open('comments.txt', 'r')
+        all_comments = f.readlines()
+        f.close()
+    except:
+        f = open('comments.txt', 'x')
+        f.close()
+
+    return render_template('comments.html', comments=all_comments)
+
+@app.route('/comments', methods=['POST'])
+def comments_post():
+    f = open("comments.txt", 'a')
+    f.writelines(request.form.get('txt') + "\n")
+    f.close()
+    return redirect('/comments')
 
 app.run(debug=True, port=9876)
