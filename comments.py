@@ -1,8 +1,9 @@
-from flask import Flask , render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect
 
 
+comments_blueprint = Blueprint('comments', __name__)
 
-@app.route('/comments')
+@comments_blueprint.route('/comments')
 def comments():
     all_comments = ""
 
@@ -16,7 +17,7 @@ def comments():
 
     return render_template('comments.html', comments=all_comments)
 
-@app.route('/comments', methods=['POST'])
+@comments_blueprint.route('/comments', methods=['POST'])
 def comments_post():
     f = open("comments.txt", 'a')
     f.writelines(request.form.get('txt') + "\n")
